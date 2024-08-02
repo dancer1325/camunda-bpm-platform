@@ -55,64 +55,65 @@
 
 ## BPMN Business Rule Task
 
-* TODO: 
-Add the following Maven Coordinates to your project:
-```xml
-<dependency>
-  <groupId>org.camunda.bpm</groupId>
-  <artifactId>camunda-engine</artifactId>
-  <version>${version.camunda}</versions>
-</dependency>
-<dependency>
-  <groupId>com.h2database</groupId>
-  <artifactId>h2</artifactId>
-  <version>1.3.168</version>
-  <scope>test</scope>
-</dependency>
-```
+* add
 
-Next, reference a DMN decision from a BPMN Business Rule Task:
+    ```xml
+    <dependency>
+      <groupId>org.camunda.bpm</groupId>
+      <artifactId>camunda-engine</artifactId>
+      <version>${version.camunda}</versions>
+    </dependency>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>1.3.168</version>
+      <scope>test</scope>
+    </dependency>
+    ```
 
-```xml
-<bpmn:businessRuleTask id="assignApprover"
-  camunda:decisionRef="invoice-assign-approver"
-  camunda:resultVariable="approverGroups"
-  name="Assign Approver Group(s)">
-</bpmn:businessRuleTask>
-```
-The `camunda:decisionRef` attribute references the id of the decision in the DMN file:
+* add BPMN Business Rule Task
 
-```xml
-<dmn:decision id="invoice-assign-approver" name="Assign Approver">
-  ...
-</dmn:decision>
-```
+    ```xml
+    <bpmn:businessRuleTask id="assignApprover"
+      camunda:decisionRef="invoice-assign-approver"
+      camunda:resultVariable="approverGroups"
+      name="Assign Approver Group(s)">
+    </bpmn:businessRuleTask>
+    ```
+  
+* addThe dmn 
 
-Now you can start the BPMN process inside your application:
+    ```xml
+    <dmn:decision id="invoice-assign-approver" name="Assign Approver">
+      ...
+    </dmn:decision>
+    ```
 
-```java
-public class App {
+* start the BPMN process | your application
 
-  public static void main(String[] args) {
-
-    ProcessEngine processEngine = ProcessEngineConfiguration.createStandaloneInMemProcessEngineConfiguration()
-      .buildProcessEngine();
-
-    try {
-      processEngine.getRepositoryService()
-        .createDeployment()
-        .name("invoice deployment")
-        .addClasspathResource("invoice.bpmn")
-        .addClasspathResource("assign-approver-groups.dmn")
-        .deploy();
-
-      processEngine.getRuntimeService()
-        .startProcessInstanceByKey("invoice", createVariables()
-            .putValue("invoceNumber", "2323"));
+    ```java
+    public class App {
+    
+      public static void main(String[] args) {
+    
+        ProcessEngine processEngine = ProcessEngineConfiguration.createStandaloneInMemProcessEngineConfiguration()
+          .buildProcessEngine();
+    
+        try {
+          processEngine.getRepositoryService()
+            .createDeployment()
+            .name("invoice deployment")
+            .addClasspathResource("invoice.bpmn")
+            .addClasspathResource("assign-approver-groups.dmn")
+            .deploy();
+    
+          processEngine.getRuntimeService()
+            .startProcessInstanceByKey("invoice", createVariables()
+                .putValue("invoceNumber", "2323"));
+        }
+        finally {
+          processEngine.close();
+        }
+      }
     }
-    finally {
-      processEngine.close();
-    }
-  }
-}
-```
+    ```

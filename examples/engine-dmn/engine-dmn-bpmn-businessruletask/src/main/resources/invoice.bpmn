@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:businessRuleTask id="assignApprover"
+  camunda:decisionRef="invoice-assign-approver"
+  camunda:resultVariable="approverGroups"
+  name="Assign Approver Group(s)">
+</bpmn:businessRuleTask>
