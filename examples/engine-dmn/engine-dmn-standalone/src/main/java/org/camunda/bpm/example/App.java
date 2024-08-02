@@ -21,7 +21,9 @@ public class App
         //InputStream file = new FileInputStream("../../../../" + DMN_PATH);
         //InputStream file = new FileInputStream("../../../" + DMN_PATH);
         //InputStream file = new FileInputStream("." + DMN_PATH);
-        InputStream file = new FileInputStream("classpath:" + DMN_PATH);
+        //InputStream file = new FileInputStream("classpath:" + DMN_PATH);
+        //InputStream file = new FileInputStream("org.camunda.bpm.example." + DMN_PATH);
+        InputStream file = new FileInputStream("org/camunda/bpm/example/" + DMN_PATH);
 
         // configure and build the DMN engine
         DmnEngine dmnEngine = DmnEngineConfiguration.createDefaultDmnEngineConfiguration().buildEngine();
