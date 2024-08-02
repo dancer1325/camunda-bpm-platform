@@ -1,7 +1,12 @@
 
 ==================
 
-Lightweight Execution Engine for DMN (Decision Model and Notation) written in Java.
+* == Lightweight Execution Engine for DMN (Decision Model and Notation)
+  * written in Java
+  * use cases
+    * \+ BPMN
+    * \+ CMMN
+    * standalone
 
 <p>
   <a href="http://camunda.org/">Home</a> |
@@ -9,47 +14,48 @@ Lightweight Execution Engine for DMN (Decision Model and Notation) written in Ja
   <a href="https://app.camunda.com/jira/browse/CAM">Issues</a> |
 </p>
 
-The Decision Engine can be used seamlessly in combination with BPMN and CMMN or standalone.
 
 ## Standalone Usage
 
-Add the following Maven Coordinates to your project:
+* add
 
-```xml
-<dependency>
-  <groupId>org.camunda.bpm.dmn</groupId>
-  <artifactId>camunda-engine-dmn</artifactId>
-  <version>${version.camunda}</version>
-</dependency>
-```
+    ```xml
+    <dependency>
+      <groupId>org.camunda.bpm.dmn</groupId>
+      <artifactId>camunda-engine-dmn</artifactId>
+      <version>${version.camunda}</version>
+    </dependency>
+    ```
 
-Now you can use the DMN engine inside your Java Code:
+* how to use 
 
-```java
-public class DmnApp {
+    ```java
+    public class DmnApp {
+    
+      public static void main(String[] args) {
+    
+        // configure and build the DMN engine
+        DmnEngine dmnEngine = DmnEngineConfiguration.createDefaultDmnEngineConfiguration().buildEngine();
+    
+        // parse a decision
+        DmnDecision decision = dmnEngine.parseDecision("orderDecision", "CheckOrder.dmn");
+    
+        Map<String, Object> data = new HashMap<String, Object>();
+        data.put("status", "gold");
+        data.put("sum", 354.12d);
+    
+        // evaluate a decision
+        DmnDecisionTableResult result = dmnEngine.evaluateDecisionTable(decision, data);
+    
+      }
+    
+    }
+    ```
+* _Example:_ Check "examples/engine-dmn/engine-dmn-standalone"
 
-  public static void main(String[] args) {
+## BPMN Business Rule Task
 
-    // configure and build the DMN engine
-    DmnEngine dmnEngine = DmnEngineConfiguration.createDefaultDmnEngineConfiguration().buildEngine();
-
-    // parse a decision
-    DmnDecision decision = dmnEngine.parseDecision("orderDecision", "CheckOrder.dmn");
-
-    Map<String, Object> data = new HashMap<String, Object>();
-    data.put("status", "gold");
-    data.put("sum", 354.12d);
-
-    // evaluate a decision
-    DmnDecisionTableResult result = dmnEngine.evaluateDecisionTable(decision, data);
-
-  }
-
-}
-```
-
-## Use DMN Engine for implementing a BPMN Business Rule Task
-
+* TODO: 
 Add the following Maven Coordinates to your project:
 ```xml
 <dependency>
